@@ -17,7 +17,8 @@ class PostRepositoryImpl : PostRepository {
     private val typeToken = object : TypeToken<List<Post>>() {}
 
     companion object {
-        private const val BASE_URL = "http://10.0.2.2:9999"
+        //private const val BASE_URL = "http://10.0.2.2:9999"
+        private const val BASE_URL = "http://10.0.100.218:9999"
         private val jsonType = "application/json".toMediaType()
     }
 
@@ -58,7 +59,7 @@ class PostRepositoryImpl : PostRepository {
                 override fun onResponse(call: Call, response: Response) {
                     val body = response.body?.string() ?: throw RuntimeException("body is null")
                     try {
-                        callback.onSuccess(gson.fromJson(body, object : TypeToken<Post>() {}.type))
+                        callback.onSuccess(gson.fromJson(body, Post::class.java))
                     } catch (e: Exception) {
                         callback.onError(e)
                     }
@@ -107,7 +108,7 @@ class PostRepositoryImpl : PostRepository {
                             callback.onSuccess(
                                 gson.fromJson(
                                     body,
-                                    object : TypeToken<Post>() {}.type
+                                    Post::class.java
                                 )
                             )
                         } catch (e: Exception) {
@@ -136,7 +137,7 @@ class PostRepositoryImpl : PostRepository {
                             callback.onSuccess(
                                 gson.fromJson(
                                     body,
-                                    object : TypeToken<Post>() {}.type
+                                    Post::class.java
                                 )
                             )
                         } catch (e: Exception) {
